@@ -53,9 +53,12 @@ services:
             - '${NETWORK_NAME}'
 
 networks:
-    default:
-        external:
+    networks:
+        default:
+            external:
             name: nginx-proxy
+    myweb_networks:
+        driver: bridge
 
 volumes:
     myweb_database_data:
