@@ -17,9 +17,9 @@ services:
         build: ./php/
         restart: unless-stopped
         expose:
-            - 9000
+            - 80
         volumes:
-            - './public_html:/var/www/html'
+            - './public_html/:/var/www/html'
         depends_on:
             - db_server
 
@@ -53,8 +53,9 @@ services:
             - '${NETWORK_NAME}'
 
 networks:
-    myweb_networks:
-        driver: bridge
+    default:
+        external:
+            name: nginx-proxy
 
 volumes:
     myweb_database_data:
