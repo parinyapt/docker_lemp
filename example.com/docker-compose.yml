@@ -53,10 +53,7 @@ services:
             - '${NETWORK_NAME}'
 
 networks:
-    networks:
-        default:
-            external:
-            name: nginx-proxy
+    nginx-proxy:
     myweb_networks:
         driver: bridge
 
