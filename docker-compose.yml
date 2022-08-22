@@ -3,12 +3,15 @@ version: '3'
 services:
   php:
     container_name: lemp_php
-    image: php:7.4-fpm-alpine
+    build: php/
     restart: unless-stopped
     volumes:
       - ./html:/var/www/html
     expose:
       - "9000"
+    depends_on:
+      - db
+
   nginx:
     container_name: lemp_nginx
     image: nginx:stable-alpine
@@ -19,6 +22,20 @@ services:
       - ./nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
       - "80:80"
+
+  db:
+    container_name: lemp_mariadb
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - ./mariadb/initdb/:/docker-entrypoint-initdb.d
+      - ./mariadb/data/:/var/lib/mysql/
+    environment:
+      - MYSQL_ROOT_PASSWORD=devops101root
+      - MYSQL_DATABASE=devops_db
+      - MYSQL_USER=devops
+      - MYSQL_PASSWORD=devops101
+
 networks:
   default:
     external:
