@@ -35,6 +35,19 @@ services:
       - MYSQL_DATABASE=devops_db
       - MYSQL_USER=devops
       - MYSQL_PASSWORD=devops101
+  
+  phpmyadmin:
+    container_name: lemp_phpmyadmin
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "8080:80"
+    links:
+      - db
+    environment:
+      - PMA_HOST:db
+      - PMA_PORT=3306
+      - PMA_ARBITRARY=1
 
 networks:
   default:
